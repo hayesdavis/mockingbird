@@ -30,6 +30,7 @@ mockingbird server what you want it to do. Here's a simple example:
     end
     
 Here's what this does in plain english:
+
 * Tells the server to listen on port 8080 and do the stuff in the block on 
   each connection.
 * On a connection, send '{"foo":"bar"}' down to the client
@@ -62,6 +63,7 @@ different things. This is handy for testing reconnection code:
     end
     
 Again, in plain english:
+
 * On the first connection, we do a hard disconnect (just drop the connection)
 * On connections 2-5, wait a half second, then close the connection nicely
 * On all subsequent connections ("*"), send down 100 foo bars and close
