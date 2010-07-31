@@ -61,7 +61,7 @@ different things. This is handy for testing reconnection code:
       end
     end
     
- Again, in plain english:
+Again, in plain english:
   * On the first connection, we do a hard disconnect (just drop the connection)
   * On connections 2-5, wait a half second, then close the connection nicely
   * On all subsequent connections ("*"), send down 100 foo bars and close
@@ -77,11 +77,11 @@ done. Make sure to *always* call Mockingbird#teardown. This is easy in test/unit
 if you're actually calling these methods in setup and teardown. If you need to 
 setup and teardown a server in a test method, do the following:
 
-   def test_something
-     Mockingbird.setup(:port=>NNNN) do
-       # config here
-     end
-     # do tests
-   ensure
-     Mockingbird.teardown
-   end  
+    def test_something
+      Mockingbird.setup(:port=>NNNN) do
+         # config here
+      end
+      # do tests
+    ensure
+      Mockingbird.teardown
+    end  
