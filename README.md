@@ -30,14 +30,14 @@ mockingbird server what you want it to do. Here's a simple example:
     end
     
 Here's what this does in plain english:
-  * Tells the server to listen on port 8080 and do the stuff in the block on 
-    each connection.
-  * On a connection, send '{"foo":"bar"}' down to the client
-  * Wait 1 second
-  * Then send '{"foo2":"bar2"}' down to the client 5 times
-  * Then send each line from some/file.txt to the clien, waiting 1 second in 
-    between sends
-  * Close the connection
+* Tells the server to listen on port 8080 and do the stuff in the block on 
+  each connection.
+* On a connection, send '{"foo":"bar"}' down to the client
+* Wait 1 second
+* Then send '{"foo2":"bar2"}' down to the client 5 times
+* Then send each line from some/file.txt to the clien, waiting 1 second in 
+  between sends
+* Close the connection
   
 Mockingbird assigns each conection an incrementing id. This means you can 
 specify behavior over multiple connections with different connections doing 
@@ -62,9 +62,9 @@ different things. This is handy for testing reconnection code:
     end
     
 Again, in plain english:
-  * On the first connection, we do a hard disconnect (just drop the connection)
-  * On connections 2-5, wait a half second, then close the connection nicely
-  * On all subsequent connections ("*"), send down 100 foo bars and close
+* On the first connection, we do a hard disconnect (just drop the connection)
+* On connections 2-5, wait a half second, then close the connection nicely
+* On all subsequent connections ("*"), send down 100 foo bars and close
 
 See the docs on Mockingbird::Script for all the available configuration options.
 
