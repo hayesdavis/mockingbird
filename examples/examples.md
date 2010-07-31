@@ -3,10 +3,10 @@ How to run examples
 It's easiest to do this if you have curl. From the root directory of this 
 project run the following
 
-   $ ruby examples/EXAMPLE_FILE.rb
+    $ ruby examples/EXAMPLE_FILE.rb
     Waiting for Mockingbird to start...
     Mockingbird is mocking you on 0.0.0.0:8080 (pid=50990)    
-   $ curl -v http://localhost:8080 
+    $ curl -v http://localhost:8080 
    
 Depending on the example file and your version of curl, you'll see something 
 similar to this:
