@@ -31,5 +31,5 @@ its own process. You can grep it like below or use the pid printed when you
 ran the example file.
 
     $ ps | grep mockingbird
-    50795 ttys006    0:00.33 mockingbird:0.0.0.0:8080
-    $ kill -9 50795
+    50990 ttys006    0:00.33 mockingbird:0.0.0.0:8080
+    $ kill -9 50990
