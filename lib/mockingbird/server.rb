@@ -23,7 +23,7 @@ module Mockingbird
         host = opts[:host]
         port = opts[:port]
         EventMachine::run do
-          puts "Mockingbird is mocking you on #{host}:#{port}"
+          puts "Mockingbird is mocking you on #{host}:#{port} (pid=#{$$})"
           EventMachine::start_server host, port, self
         end
       end
@@ -37,7 +37,7 @@ module Mockingbird
       end
       
       def new_connection_id
-        @connection_id ||= -1
+        @connection_id ||= 0
         @connection_id += 1
       end
       
