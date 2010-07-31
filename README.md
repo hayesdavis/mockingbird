@@ -56,7 +56,7 @@ different things. This is handy for testing reconnection code:
       
       on_connection('*') do
         100.times do
-          send send '{"foo":"bar"}'
+          send '{"foo":"bar"}'
         end
         close
       end
@@ -69,6 +69,7 @@ Again, in plain english:
 * On all subsequent connections ("*"), send down 100 foo bars and close
 
 See the docs on Mockingbird::Script for all the available configuration options.
+Also, see the examples directory for more usage.
 
 Using in Tests
 --------------
@@ -87,3 +88,15 @@ setup and teardown a server in a test method, do the following:
     ensure
       Mockingbird.teardown
     end  
+
+Limitations
+-----------
+* SSL is not supported.
+* Since connection ids are incrementing with each connection you won't be able 
+  able to easily target specific connections if you have multiple clients 
+  connecting at once to the mockingbird server. It's generally recommended that 
+  you have a single client connecting to mockingbird serially during a single 
+  test run. Doing otherwise would probably be confusing anyway.
+* The server does not even pay attention to your actual request, it will just 
+  always respond with the defined configuration script regardless of what you 
+  send on connection.
