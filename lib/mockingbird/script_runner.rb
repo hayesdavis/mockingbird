@@ -16,7 +16,7 @@ module Mockingbird
     end
     
     def send_status
-      code, message = (script.status_line || [200,"OK"])
+      code, message = (script.status || [200,"OK"])
       conn.send_status(code,message)  
     end
     
@@ -25,7 +25,7 @@ module Mockingbird
         "Transfer-Encoding"=>"chunked",
         "Content-Type"=>"application/json",
         "Server"=>"Mockingbird"
-      }.merge(script.header_data||{})
+      }.merge(script.headers||{})
       headers.each do |name, value|
         conn.send_header(name, value)      
       end

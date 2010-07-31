@@ -1,21 +1,42 @@
 module Mockingbird
   class Script
     
-    attr_accessor :status_line, :header_data, :body
-    
     def initialize(&block)
-      self.body = Commands::Command.new
-      @last_command = body
+      @connections = []
+      @default_connection = ConnectionScript.new
       instance_eval(&block)
     end
     
+    def for_connection(id)
+      match = @connections.find do |selector, *|
+        case selector
+          when Range    then selector.include?(id)
+          when Numeric  then selector == id
+          when Proc     then selector.call(id)
+        end
+      end
+      puts "Found: #{match} for #{id}"
+      match ? match.last : @default_connection
+    end
+    
     # Configuration API
+    def on_connection(selector=nil,&block)
+      if selector.nil? || selector == '*'
+        instance_eval(&block)
+      else
+        @current_connection = ConnectionScript.new
+        instance_eval(&block)
+        @connections << [selector,@current_connection]
+        @current_connection = nil
+      end
+    end
+    
     def status(code, message="")
-      self.status_line = [code, message]
+      current_connection.status = [code, message]
     end
     
     def headers(hash)
-      self.header_data = hash
+      current_connection.headers = hash
     end
     
     def send(data=nil,&block)
@@ -45,12 +66,14 @@ module Mockingbird
     # Not really part of the public API but users could use this to 
     # implement their own fancy command
     def add_command(command=nil,&block)
-      if block_given?
-        command = Commands::Command.new(&block)
+      command = Commands::Command.new(&block) if block_given?
+      current_connection.add_command(command)
+    end
+    
+    private
+      def current_connection
+        @current_connection || @default_connection
       end
-      @last_command.next_command = command
-      @last_command = command
-    end    
     
   end
 end

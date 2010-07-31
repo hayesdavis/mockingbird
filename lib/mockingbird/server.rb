@@ -35,11 +35,26 @@ module Mockingbird
         @script
       end
       
+      def new_connection_id
+        @connection_id ||= -1
+        @connection_id += 1
+      end
+      
     end
     
     def receive_data(data)
-      runner = ScriptRunner.new(self,Mockingbird::Server.script)
+      conn_id = new_connection_id
+      runner = ScriptRunner.new(self,script.for_connection(conn_id))
+      puts "Running script for connection #{conn_id}"
       runner.run
+    end
+    
+    def new_connection_id
+      Mockingbird::Server.new_connection_id
+    end
+    
+    def script
+      Mockingbird::Server.script
     end
     
     def send_status(code=200,text="OK")
