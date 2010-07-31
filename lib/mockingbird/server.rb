@@ -1,10 +1,19 @@
-require 'rubygems'
-require 'eventmachine'
-require File.dirname(__FILE__)+'/commands'
-require File.dirname(__FILE__)+'/script'
-
 module Mockingbird
 
+  # A very simple eventmachine-based streaming server. Before you use a server
+  # it must be configured with configuration block:
+  #
+  #   Mockingbird::Server.configure do
+  #     # config goes here, see README for scripting
+  #   end
+  #
+  # Once configured, a server may be started using
+  # 
+  #   start!(:host=>'0.0.0.0',:port=>NNN)
+  #
+  # If you're using Mockingbird directly from test (test/unit, etc), it's 
+  # recommended that you use the simpler convenience interface defined on 
+  # the Mockingbird module.
   module Server
   
     class << self
