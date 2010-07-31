@@ -10,11 +10,13 @@ module Mockingbird
     class << self
       def start!(opts={})
         opts = {:host=>'0.0.0.0',:port=>8080}.merge(opts)
+        host = opts[:host]
+        port = opts[:port]
         run = Proc.new do
-          $0 = "mockingbird:#{opts[:host]}:#{opts[:port]}"
+          $0 = "mockingbird:#{host}:#{port}"
           EventMachine::run do
-            puts "Started mockingbird"
-            EventMachine::start_server opts[:host], opts[:port], self
+            puts "Mockingbird is mocking you on #{host}:#{port}"
+            EventMachine::start_server host, port, self
           end
         end
         if opts[:fork]
@@ -36,12 +38,20 @@ module Mockingbird
     end
     
     def receive_data(data)
-      send_data "HTTP/1.1 200 OK\r\n"
-      send_data "Content-Type: application/json\r\n"
-      send_data "Transfer-Encoding: chunked\r\n"
+      runner = ScriptRunner.new(self,Mockingbird::Server.script)
+      runner.run
+    end
+    
+    def send_status(code=200,text="OK")
+      send_data "HTTP/1.1 #{code} #{text}\r\n"
+    end
+    
+    def send_header(name,value)
+      send_data "#{name}: #{value}\r\n"
+    end
+    
+    def start_body
       send_data "\r\n"
-      
-      Mockingbird::Server.script.run(self)
     end
     
     def send_chunk(chunk)
