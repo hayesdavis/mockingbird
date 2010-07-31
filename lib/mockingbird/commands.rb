@@ -28,7 +28,6 @@ module Mockingbird
       def run(conn)
         to_send = data
         conn.send_chunk(to_send)
-        puts "Sent #{to_send}"
         advance(conn)
       end
       
@@ -78,7 +77,6 @@ module Mockingbird
     class Close < Command
       
       def run(conn)
-        puts "Sending terminal chunk"
         conn.send_terminal_chunk
         EM.add_timer(0.1) do
           conn.close_connection
@@ -91,7 +89,6 @@ module Mockingbird
     class Quit < Command
       def run(conn)
         EM.add_timer(0.5) do
-          puts "Exiting EM loop"
           EM.stop 
         end      
       end

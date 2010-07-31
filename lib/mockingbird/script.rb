@@ -15,7 +15,6 @@ module Mockingbird
           when Proc     then selector.call(id)
         end
       end
-      puts "Found: #{match} for #{id}"
       match ? match.last : @default_connection
     end
     
