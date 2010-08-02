@@ -1,16 +1,17 @@
 Mockingbird
 ===========
-Mockingbird is a test server that emulates the 
-[Twitter Streaming API](http://dev.twitter.com/pages/streaming_api). It uses 
-a simple script-like configuration DSL that makes it easy to describe the 
-behaviors you want. Mockingbird can be used to simulate bad data, unexpected 
-status codes, hard disconnects, etc. It's currently used heavily to test the  
-[flamingo](http://github.com/hayesdavis/flamingo) Streaming API service.
+Mockingbird makes it easy to test code that relies on the 
+[Twitter Streaming API](http://dev.twitter.com/pages/streaming_api). It's a 
+server with a simple script-like configuration DSL that makes it easy to 
+describe the behaviors you want. Mockingbird can be used to simulate bad data, 
+unexpected status codes, hard disconnects, etc. It's currently used heavily to 
+test the  [flamingo](http://github.com/hayesdavis/flamingo) Streaming API 
+service.
 
 Mockingbird uses [eventmachine](http://github.com/eventmachine/eventmachine/) 
 to run as an actual streaming HTTP server so it's a drop-in replacement for 
-the server at stream.twitter.com. Instead of connecting to 
-stream.twitter.com on port 80, connect to a running mockingbird server. Most 
+the server at stream.twitter.com. To test code that uses the Streaming API, 
+connect to a running mockingbird server instead of stream.twitter.com. Most 
 Twitter Streaming API clients, such as 
 [twitter-stream](http://github.com/voloko/twitter-stream), allow you to easily 
 change these host and port settings.
