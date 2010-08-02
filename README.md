@@ -1,14 +1,19 @@
 Mockingbird
 ===========
-Mockingbird emulates the Twitter Streaming API using a simple script-like 
-configuration that makes it easy to test code that connects to the Streaming 
-API. Mockingbird can be used to simulate bad data, unexpected status codes, 
-hard disconnects, etc.
+Mockingbird is a test server that emulates the 
+[Twitter Streaming API](http://dev.twitter.com/pages/streaming_api). It uses 
+a simple script-like configuration DSL that makes it easy to describe the 
+behaviors you want. Mockingbird can be used to simulate bad data, unexpected 
+status codes, hard disconnects, etc. It's currently used heavily to test the  
+[flamingo](http://github.com/hayesdavis/flamingo) Streaming API service.
 
-Mockingbird uses eventmachine to run as an actual streaming http server so
-it's a drop-in replacement for code that reads from the streaming api. 
-Simply change the host and port your code is connecting to from Twitter to 
-a mockingbird instance.
+Mockingbird uses [eventmachine](http://github.com/eventmachine/eventmachine/) 
+to run as an actual streaming HTTP server so it's a drop-in replacement for 
+the server at stream.twitter.com. Instead of connecting to 
+stream.twitter.com on port 80, connect to a running mockingbird server. Most 
+Twitter Streaming API clients, such as 
+[twitter-stream](http://github.com/voloko/twitter-stream), allow you to easily 
+change these host and port settings.
 
 Since mockingbird is designed for testing, it includes a simple 
 Mockingbird#setup and Mockingbird#teardown interface that makes it easy to 
@@ -36,7 +41,7 @@ Here's what this does in plain english:
 * On a connection, send '{"foo":"bar"}' down to the client
 * Wait 1 second
 * Then send '{"foo2":"bar2"}' down to the client 5 times
-* Then send each line from some/file.txt to the clien, waiting 1 second in 
+* Then send each line from some/file.txt to the client, waiting 1 second in 
   between sends
 * Close the connection
   
