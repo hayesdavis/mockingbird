@@ -106,8 +106,8 @@ module Mockingbird
       end
       
       def run(conn)
-        unless @io.eof?
-          chunk = @io.readline.chomp
+        unless io.eof?
+          chunk = io.readline.chomp
           conn.send_chunk(chunk)
           if delay
             EM.add_timer(delay) { run(conn) }
@@ -116,12 +116,16 @@ module Mockingbird
           end
         else
           # Reset for future calls
-          @io.rewind
+          io.rewind
           advance(conn)
         end
       end
       
       private
+        def io
+          @io
+        end
+        
         def delay
           if @delay.respond_to?(:call)
             @delay.call
