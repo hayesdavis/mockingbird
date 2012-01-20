@@ -23,6 +23,7 @@ module Mockingbird
     # Options are
     #   :host - The host to listen on. 0.0.0.0 by default
     #   :port - The port to listen on. 4879 by default
+    #   :quiet - Silence debug-output. Default is to be verbose
     #
     # The block is a Mockingbird configuration (see README).
     def setup(opts={},&block)
@@ -33,7 +34,7 @@ module Mockingbird
         Server.start!(opts)
       end
       Process.detach(@pid)
-      puts "Waiting for Mockingbird to start..."
+      puts "Waiting for Mockingbird to start..." unless opts[:quiet]
       sleep(1) # Necessary to make sure the forked proc is up and running
       @pid
     end

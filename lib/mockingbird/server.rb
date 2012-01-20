@@ -23,7 +23,7 @@ module Mockingbird
         host = opts[:host]
         port = opts[:port]
         EventMachine::run do
-          puts "Mockingbird is mocking you on #{host}:#{port} (pid=#{$$})"
+          puts "Mockingbird is mocking you on #{host}:#{port} (pid=#{$$})" unless opts[:quiet]
           EventMachine::start_server host, port, self
         end
       end
