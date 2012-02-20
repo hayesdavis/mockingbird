@@ -76,7 +76,7 @@ module Mockingbird
     end
 
     def send_terminal_chunk
-      send_data "0\r\n"
+      send_data "0\r\n\r\n"
     end
 
     private

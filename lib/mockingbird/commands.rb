@@ -107,7 +107,7 @@ module Mockingbird
       
       def run(conn)
         unless io.eof?
-          chunk = io.readline.chomp
+          chunk = io.readline
           conn.send_chunk(chunk)
           if delay
             EM.add_timer(delay) { run(conn) }

@@ -16,12 +16,22 @@ class ServerTest < Test::Unit::TestCase
 
   def test_send_chunk_encodes_data_correctly
     s = MockServer.new
-    s.send_chunk("foobar")
+
+    chunks = %w(foo barbaz)
+
+    expected_body = ""
+    chunks.each do |chunk|
+      expected_body << chunk.length.to_s(16)+"\r\n"
+      expected_body << "#{chunk}\r\n"
+    end
+    expected_body << "0\r\n\r\n"
+
+    chunks.each do |chunk|
+      s.send_chunk(chunk)
+    end
     s.send_terminal_chunk
 
-    chunk_len = "foobar".length.to_s(16)
-
-    assert_equal("#{chunk_len}\r\nfoobar\r\n0\r\n",s.sent_data)
+    assert_equal(expected_body,s.sent_data)
   end
 
 end
