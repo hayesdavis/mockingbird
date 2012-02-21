@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("examples/**/*")
 
-  s.extra_rdoc_files  = [ "LICENSE", "README.md" ]
+  s.extra_rdoc_files  = [ "LICENSE", "README.md", "CHANGELOG.md" ]
 
   s.add_dependency "eventmachine",  ">= 0.12.0"
 
